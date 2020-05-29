@@ -1,5 +1,7 @@
 # Docker Jekyll
 
+![build](https://img.shields.io/docker/cloud/build/jervenclark/jekyll) ![automated](https://img.shields.io/docker/cloud/automated/jervenclark/jekyll)
+
 Complete Jekyll environment setup
 
 ## Usage
