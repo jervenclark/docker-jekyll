@@ -1,4 +1,5 @@
-FROM scratch
+# syntax=docker/dockerfile:experimental
+FROM ruby:2.7.1-slim
 
 # Define arguments
 ARG BUILD_RFC3339="1970-01-01T00:00:00Z"
@@ -22,3 +23,24 @@ LABEL org.opencontainers.image.ref.name="jervenclark/docker-jekyll" \
 ENV BUILD_RFC3339 "$BUILD_RFC3339"
 ENV COMMIT "$COMMIT"
 ENV VERSION "$VERSION"
+
+# Prerequisites
+RUN --mount=type=cache,target=/var/cache/apt apt-get update \
+  && apt-get install -y \
+  build-essential
+
+# Setup new user
+RUN useradd -ms /bin/bash developer
+COPY ./build/config /home/developer/.bundle/config
+RUN --mount=type=cache,target=/home/developer/.bundle/cache gem install \
+  bundler \
+  jekyll:4.1.0
+
+# Install Jekyll dependencies
+RUN chown -R developer /home/developer/.bundle
+
+# Setup workspace
+USER developer
+RUN mkdir /home/developer/workspace
+RUN chown developer /home/developer/workspace
+WORKDIR /home/developer/workspace
