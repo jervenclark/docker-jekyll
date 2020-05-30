@@ -44,3 +44,5 @@ USER developer
 RUN mkdir /home/developer/workspace
 RUN chown developer /home/developer/workspace
 WORKDIR /home/developer/workspace
+
+ENTRYPOINT ["/bin/sh", "/home/developer/run.sh"]
