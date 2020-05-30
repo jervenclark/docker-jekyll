@@ -45,4 +45,6 @@ RUN mkdir /home/developer/workspace
 RUN chown developer /home/developer/workspace
 WORKDIR /home/developer/workspace
 
+COPY ./build/run.sh /home/developer/run.sh
+
 ENTRYPOINT ["/bin/sh", "/home/developer/run.sh"]
